@@ -1,7 +1,8 @@
 package me.tereshko.shop.controllers;
 
 import lombok.RequiredArgsConstructor;
-import me.tereshko.shop.services.CartService;
+import me.tereshko.shop.beans.Cart;
+import me.tereshko.shop.dto.CartDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,19 +15,34 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products/api/v1/cart/")
+@RequestMapping("/api/v1/cart")
 public class CartController {
-    private final CartService cartService;
+    private final Cart cart;
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> showCart() {
+    public ResponseEntity<Map<String, Object>> getCart() {
         Map<String, Object> response = new HashMap<>();
-        response.put("cart", cartService.getCartList());
+        response.put("cart", new CartDto(cart));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
-    public void cartItem(@PathVariable Long id) {
-        cartService.addProductToCart(id);
+    @GetMapping("/add/{id}")
+    public void addToCart(@PathVariable Long id) {
+        cart.addToCart(id);
+    }
+
+    @GetMapping("/clear")
+    public void clearCart() {
+        cart.clear();
+    }
+
+    @GetMapping("/increment/{id}")
+    public void incrementItem(@PathVariable Long id) {
+        cart.addToCart(id);
+    }
+
+    @GetMapping("/decrement/{id}")
+    public void decrementItem(@PathVariable Long id) {
+        cart.decrementItem(id);
     }
 }
