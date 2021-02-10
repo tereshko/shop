@@ -11,13 +11,39 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="index.js"></script>
-    <title>web9</title>
+    <title>shop</title>
 </head>
 
 <body>
 <div class="container" ng-controller="indexPageController">
+    <div class="input-group mb-3">
+
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="first_name">@</span>
+        </div>
+
+        <label class="form-control" >{{first_name}}</label>
+        <label class="form-control" >{{last_name}}</label>
+
+    </div>
+
     <h1>Products</h1>
     <h3>All Products</h3>
+
+    <div class="mb-3 text-center" ng-show="!authorized">
+        <form class="form-signin" ng-submit="tryToAuth()" style="max-width: 350px; padding: 15px; margin: 0 auto;">
+            <h1 class="h3 mb-3 font-weight-normal">Пожалуйста войдите</h1>
+            <label for="inputUsername" class="sr-only">Имя пользователя</label>
+            <input type="text" ng-model="user.username" id="inputUsername" class="form-control"
+                   placeholder="Имя пользователя" style="margin-bottom: 10px;" required="">
+            <label for="inputPassword" class="sr-only">Пароль</label>
+            <input type="password" ng-model="user.password" id="inputPassword" class="form-control" placeholder="Пароль"
+                   style="margin-bottom: 10px;" required="">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+            <p class="mt-5 mb-3 text-muted">© GeekBrains 2021</p>
+        </form>
+    </div>
+
     <table class="table table-hover" cellpadding="0" cellspacing="0">
         <thead>
         <tr>
@@ -73,14 +99,17 @@
                     <div class="col-lg-2">
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button type="button" class="quantity-minus btn btn-danger" ng-click="decrementItem(cartList.id)">-
+                                <button type="button" class="quantity-minus btn btn-danger"
+                                        ng-click="decrementItem(cartList.id)">-
                                     <span class="glyphicon glyphicon-minus">
                                     </span>
                                 </button>
                             </span>
-                            <input type="number" class="form-control input-number" value={{cartList.quantity}} min="1" max="99" size="2">
+                            <input type="number" class="form-control input-number" value={{cartList.quantity}} min="1"
+                                   max="99" size="2">
                             <span class="input-group-btn">
-                                <button type="button" class="quantity-plus btn btn-success" ng-click="incrementItem(cartList.id)">+
+                                <button type="button" class="quantity-plus btn btn-success"
+                                        ng-click="incrementItem(cartList.id)">+
                                     <span class="glyphicon glyphicon-plus">
                                     </span>
                                 </button>
@@ -91,10 +120,10 @@
                 </td>
                 <td>{{cartList.price}}</td>
             </tr>
-                <td>Total</td>
-                <td></td>
-                <td></td>
-                <td>{{CartList.totalPrice}}</td>
+            <td>Total</td>
+            <td></td>
+            <td></td>
+            <td>{{CartList.totalPrice}}</td>
             </tbody>
         </table>
         <button class="btn btn-danger" ng-click="clearCart()">Clear cart</button>

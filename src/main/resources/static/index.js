@@ -53,7 +53,27 @@ angular.module('app', []).controller('indexPageController', function ($scope, $h
         })
     };
 
-    $scope.fillCart();
-    $scope.filltable($scope.page);
+    $scope.tryToAuth = function () {
+        console.log(contextPath + '/auth')
+        $http.post(contextPath + '/auth', $scope.user)
+            .then(function successCallback(response) {
+                if (response.data.token.token) {
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token.token;
+                    $scope.user.username = null;
+                    $scope.user.password = null;
+                    $scope.authorized = true;
+                    $scope.last_name = response.data.user.last_name;
+                    $scope.first_name = response.data.user.first_name;
+                    console.log($scope.last_name);
+                    console.log($scope.first_name);
+                    $scope.filltable($scope.page);
+                }
+            }, function errorCallback(response) {
+                window.alert("Error");
+            });
+    };
+
+    // $scope.fillCart();
+    // $scope.filltable($scope.page);
 
 });
