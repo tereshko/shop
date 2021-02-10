@@ -28,7 +28,6 @@
     </div>
 
     <h1>Products</h1>
-    <h3>All Products</h3>
 
     <div class="mb-3 text-center" ng-show="!authorized">
         <form class="form-signin" ng-submit="tryToAuth()" style="max-width: 350px; padding: 15px; margin: 0 auto;">
@@ -96,27 +95,21 @@
                 <td>{{cartList.productTitle}}</td>
                 <td>{{cartList.pricePerProduct}}</td>
                 <td>
-                    <div class="col-lg-2">
+                    <div class="col-sm-4">
                         <div class="input-group">
                             <span class="input-group-btn">
-                                <button type="button" class="quantity-minus btn btn-danger"
-                                        ng-click="decrementItem(cartList.id)">-
-                                    <span class="glyphicon glyphicon-minus">
-                                    </span>
+                                <button type="button" class="quantity-minus btn btn-danger" ng-click="decrementItem(cartList.id)">-
+                                    <span class="glyphicon glyphicon-minus"></span>
                                 </button>
                             </span>
-                            <input type="number" class="form-control input-number" value={{cartList.quantity}} min="1"
-                                   max="99" size="2">
+                            <input type="number" class="form-control input-number" value={{cartList.quantity}} min="1" max="99" size="2">
                             <span class="input-group-btn">
-                                <button type="button" class="quantity-plus btn btn-success"
-                                        ng-click="incrementItem(cartList.id)">+
-                                    <span class="glyphicon glyphicon-plus">
-                                    </span>
+                                <button type="button" class="quantity-plus btn btn-success" ng-click="incrementItem(cartList.id)">+
+                                    <span class="glyphicon glyphicon-plus"></span>
                                 </button>
                             </span>
                         </div>
                     </div>
-
                 </td>
                 <td>{{cartList.price}}</td>
             </tr>
