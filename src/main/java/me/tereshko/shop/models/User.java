@@ -11,7 +11,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Table(name = "users")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -26,7 +26,6 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-
     public Page<ProductDto> findAll(Specification<Product> spec, Pageable pageable) {
         return productRepository.findAll(spec,pageable).map(ProductDto::new);
     }
