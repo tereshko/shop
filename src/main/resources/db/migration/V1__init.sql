@@ -1,7 +1,7 @@
-create TABLE product (
-                        id                  bigserial not null AUTO_INCREMENT,
-                        name                varchar(200) not null,
-                        price               float not null
+create table products (
+                          id                      bigserial primary key,
+                          title                   varchar(255),
+                          price                   double
 );
 
 create table users (
@@ -28,10 +28,38 @@ CREATE TABLE users_roles (
                              primary key (user_id, role_id)
 );
 
+create table orders_address (
+                                id                      bigserial primary key,
+                                address1                varchar(255),
+                                address2                varchar(255),
+                                city                    varchar(255),
+                                state                   varchar(255),
+                                zip                     int
+);
+
+create table orders (
+                        id                      bigserial primary key,
+                        owner_id                bigint references users (id),
+                        price                   int,
+                        address_id              bigint references orders_address (id),
+                        created_at              timestamp default current_timestamp,
+                        updated_at              timestamp default current_timestamp
+);
+
+
+
 create table order_items (
                              id                      bigserial primary key,
+                             order_id                bigint references orders (id),
+                             product_id              bigint references products (id),
                              title                   varchar(255),
                              quantity                int,
-                             price_per_item          int,
-                             price                   int
+                             price_per_product       int,
+                             price                   int,
+                             created_at              timestamp default current_timestamp,
+                             updated_at              timestamp default current_timestamp
 );
+
+
+
+

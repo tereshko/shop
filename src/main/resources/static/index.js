@@ -1,7 +1,9 @@
-angular.module('app', []).controller('indexPageController', function ($scope, $http) {
+angular.module('app', ['ngStorage']).controller('indexPageController', function ($scope, $http, $localStorage) {
     const contextPath = 'http://localhost:8989/api/v1'
 
     $scope.page = 0;
+    $scope.authorized = false;
+    $scope.registration = false;
 
     $scope.filltable = function (page) {
         $http.get(contextPath + '/products?page=' + page)
@@ -54,7 +56,6 @@ angular.module('app', []).controller('indexPageController', function ($scope, $h
     };
 
     $scope.tryToAuth = function () {
-        console.log(contextPath + '/auth')
         $http.post(contextPath + '/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token.token) {
@@ -64,14 +65,62 @@ angular.module('app', []).controller('indexPageController', function ($scope, $h
                     $scope.authorized = true;
                     $scope.last_name = response.data.user.last_name;
                     $scope.first_name = response.data.user.first_name;
-                    console.log($scope.last_name);
-                    console.log($scope.first_name);
                     $scope.filltable($scope.page);
                 }
             }, function errorCallback(response) {
                 window.alert("Error");
             });
     };
+
+    $scope.showMyOrders = function () {
+        $http({
+            url: contextPath + '/orders',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.MyOrders = response.data;
+        });
+    };
+
+    $scope.createOrder = function () {
+        $http.post(contextPath + '/orders/create', $scope.address)
+            .then(function (response) {
+                $scope.addressForm.$setPristine();
+                $scope.address = null;
+                $scope.showMyOrders();
+                $scope.fillCart();
+            });
+    }
+
+    $scope.registrationForm = function () {
+        $scope.registration = true;
+    }
+    $scope.authorizedForm = function () {
+        $scope.registration = false;
+    }
+
+    $scope.tryToRegisterUser = function () {
+        $http.post(contextPath + '/registration', $scope.user)
+            .then(function successCallback(response) {
+                // if (response.data.token.token) {
+                //     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token.token;
+                //     $scope.user.username = null;
+                //     $scope.user.password = null;
+                //     $scope.authorized = true;
+                //     $scope.last_name = response.data.user.last_name;
+                //     $scope.first_name = response.data.user.first_name;
+                //     console.log($scope.last_name);
+                //     console.log($scope.first_name);
+                //     $scope.filltable($scope.page);
+                // }
+                $scope.authorized = false;
+                $scope.registration = false;
+
+            }, function errorCallback(response) {
+                window.alert("Error");
+            });
+    };
+
+
 
     // $scope.fillCart();
     // $scope.filltable($scope.page);
