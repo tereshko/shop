@@ -1,0 +1,48 @@
+<h1>Cart</h1>
+<h3>All Products in the cart</h3>
+<div class="container" ng-show="isUserLoggedIn()">
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td>Title</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td>Total price</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="cartList in CartList.itemDtos">
+            <td>{{cartList.productTitle}}</td>
+            <td>{{cartList.pricePerProduct}}</td>
+            <td>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="quantity-minus btn btn-danger"
+                                        ng-click="decrementItem(cartList.id)">-
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                        <input type="number" class="form-control input-number" value="{{cartList.quantity}}" size="5">
+                        <span class="input-group-btn">
+                                <button type="button" class="quantity-plus btn btn-success"
+                                        ng-click="incrementItem(cartList.id)">+
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                    </div>
+                </div>
+            </td>
+            <td>{{cartList.price}}</td>
+        </tr>
+        <td>Total</td>
+        <td></td>
+        <td></td>
+        <td>{{CartList.totalPrice}}</td>
+        </tbody>
+    </table>
+<button class="btn btn-primary" ng-click="goToOrderSubmit()">Create order</button>
+<button class="btn btn-danger" ng-click="clearCart()">Clear cart</button>
+</div>
+<span ng-show="isUserLoggedIn() == false">Cart is empty</span>

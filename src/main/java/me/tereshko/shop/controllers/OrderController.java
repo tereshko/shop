@@ -7,6 +7,7 @@ import me.tereshko.shop.dto.UserDto;
 import me.tereshko.shop.dto.jwt.JWTResponse;
 import me.tereshko.shop.exceptions_handling.ResourceNotFoundException;
 import me.tereshko.shop.models.Address;
+import me.tereshko.shop.models.Order;
 import me.tereshko.shop.models.User;
 import me.tereshko.shop.services.AddressService;
 import me.tereshko.shop.services.OrderService;
@@ -33,9 +34,10 @@ public class OrderController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createOrderFromCart(Principal principal, @RequestBody Address address) {
+    public OrderDto createOrderFromCart(Principal principal, @RequestBody Address address) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        orderService.createFromUserCart(user, address);
+        Order order = orderService.createFromUserCart(user, address);
+        return new OrderDto(order);
     }
 
     @GetMapping
@@ -43,20 +45,9 @@ public class OrderController {
         return orderService.findAllOrdersByOwnerName(principal.getName()).stream().map(OrderDto::new).collect(Collectors.toList());
     }
 
-//    @GetMapping
-//    public ResponseEntity<?> getCurrentUserOrders(Principal principal) {
-//
-//        Map<String, Object> response = new HashMap<>();
-//        List<OrderDto> orderDto = orderService.findAllOrdersByOwnerName(principal.getName()).stream().map(OrderDto::new).collect(Collectors.toList());
-//
-//        User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-//        Optional<Address> address = addressService.findAddressById(orderDto.getAddress_id());
-//
-//
-//
-//        response.put("order", );
-//        response.put("address", new Address(user));
-//
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/{id}")
+    public OrderDto getOrderById(@PathVariable Long id) {
+        Order order = orderService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        return new OrderDto(order);
+    }
 }

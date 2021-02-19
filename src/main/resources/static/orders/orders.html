@@ -1,0 +1,21 @@
+<h3>My orders</h3>
+<table class="table table-hover" cellpadding="0" cellspacing="0">
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>User name</td>
+        <td>Price</td>
+        <td>Date</td>
+        <td>Address</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="myOrders in MyOrders">
+        <td>#{{myOrders.id}}</td>
+        <td>{{myOrders.username}}</td>
+        <td>{{myOrders.totalPrice}}</td>
+        <td>{{myOrders.creationDateTime}}</td>
+        <td>{{myOrders.address}}</td>
+    </tr>
+    </tbody>
+</table>

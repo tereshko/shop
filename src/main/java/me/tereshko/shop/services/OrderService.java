@@ -11,6 +11,7 @@ import me.tereshko.shop.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,10 @@ public class OrderService {
         }
 
         return order;
+    }
+
+    public Optional<Order> findById(Long id) {
+        return orderRepository.findById(id);
     }
 
     public List<Order> findAllOrdersByOwnerName(String username) {
