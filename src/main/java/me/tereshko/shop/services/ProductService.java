@@ -10,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -28,6 +30,10 @@ public class ProductService {
 
     public Page<ProductDto> findAll(Specification<Product> spec, Pageable pageable) {
         return productRepository.findAll(spec,pageable).map(ProductDto::new);
+    }
+
+    public List<ProductDto> findAllProductsDto() {
+        return productRepository.findAll().stream().map(ProductDto::new).collect(Collectors.toList());
     }
 
     public Product saveOrUpdate(Product product) {

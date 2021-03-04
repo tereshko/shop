@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tn="http://www.tereshko.me/spring/ws/product"
+        targetNamespace="http://www.tereshko.me/spring/ws/product" elementFormDefault="qualified">
+
+    <xs:element name="getProductDtoByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getProductDtoByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="productDto" type="tn:productDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllProductsDtoRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getAllProductsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="productsDto" maxOccurs="unbounded" type="tn:productDto"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="productDto">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="price" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
