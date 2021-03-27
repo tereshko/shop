@@ -12,8 +12,7 @@ import java.util.UUID;
 @Table(name = "carts")
 @Data
 @NoArgsConstructor
-public class Cart1 {
-    // todo ЧТО ТАКОЕ HAMCREST внутри
+public class Cart {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
@@ -24,7 +23,7 @@ public class Cart1 {
     private List<CartItem> items;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     public void add(CartItem cartItem) {
         this.items.add(cartItem);
