@@ -6,7 +6,6 @@ import me.tereshko.shop.exceptions_handling.ResourceNotFoundException;
 import me.tereshko.shop.models.OrderItem;
 import me.tereshko.shop.models.Product;
 import me.tereshko.shop.services.ProductService;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

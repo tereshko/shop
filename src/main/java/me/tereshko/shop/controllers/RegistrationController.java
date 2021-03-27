@@ -29,7 +29,6 @@ public class RegistrationController {
         userService.saveUser(user);
         UserDto userDto = new UserDto(user);
 
-
         return userDto;
     }
 }
