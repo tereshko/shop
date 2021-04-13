@@ -1,18 +1,26 @@
 angular.module('app').controller('cartController', function ($scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:8989/api/v1';
 
-    $scope.showCart = function () {
-        $http.get(contextPath + "/cart")
-            .then(function (response) {
-                $scope.CartList = response.data.cart;
+    $scope.getUID = function () {
+        if($localStorage.uid == null) {
+            $http.post(contextPath + "/cart")
+                .then(function (response) {
+                    $localStorage.uid = response.data;
+                    console.log($localStorage.uid);
             });
+        } else {
+            console.log("test");
+            console.log($localStorage.uid);
+        }
     }
 
-    $scope.addToCart = function (id) {
-        $http.get(contextPath + "/cart/add/" + parseInt(id)).then(function (reloadPage) {
-            $scope.showCart();
-        })
-    };
+    $scope.showCart = function () {
+        $http.get(contextPath + "/cart/" + $localStorage.uid)
+            .then(function (response) {
+                console.log(response);
+                $scope.CartList = response.data;
+            });
+    }
 
     $scope.clearCart = function () {
         $http.get(contextPath + "/cart/clear").then(function (reloadPage) {
@@ -52,7 +60,7 @@ angular.module('app').controller('cartController', function ($scope, $http, $loc
         }
     };
 
-
+    $scope.getUID();
     $scope.showCart();
 
 });

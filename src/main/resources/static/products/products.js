@@ -13,7 +13,7 @@ angular.module('app').controller('productsController', function ($scope, $http, 
     };
 
     $scope.addToCart = function (id) {
-        $http.get(contextPath + "/cart/add/" + parseInt(id)).then(function (reloadPage) {
+        $http.get(contextPath + "/cart/" + $localStorage.uid + "/add/" + parseInt(id)).then(function (reloadPage) {
         })
     };
 

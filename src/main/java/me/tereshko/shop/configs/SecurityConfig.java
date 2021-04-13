@@ -11,10 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableWebSecurity
+//@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtRequestFilter jwtRequestFilter;
 
@@ -26,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v1/registration").permitAll()
                 .antMatchers("/api/v1/auth").permitAll()
-                .antMatchers("/api/v1/cart/**").authenticated()
+//                .antMatchers("/api/v1/cart/**").authenticated()
                 .antMatchers("/api/v1/orders/**").authenticated()
 //                .antMatchers("/api/v1/**").authenticated()
                 .antMatchers("/h2-console/**").permitAll()

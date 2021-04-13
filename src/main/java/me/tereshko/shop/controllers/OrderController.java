@@ -2,25 +2,19 @@ package me.tereshko.shop.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.tereshko.shop.dto.CartDto;
 import me.tereshko.shop.dto.OrderDto;
-import me.tereshko.shop.dto.UserDto;
-import me.tereshko.shop.dto.jwt.JWTResponse;
 import me.tereshko.shop.exceptions_handling.ResourceNotFoundException;
-import me.tereshko.shop.models.Address;
 import me.tereshko.shop.models.Order;
 import me.tereshko.shop.models.User;
 import me.tereshko.shop.services.AddressService;
 import me.tereshko.shop.services.OrderService;
 import me.tereshko.shop.services.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,7 +28,7 @@ public class OrderController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto createOrderFromCart(Principal principal, @RequestBody Address address) {
+    public OrderDto createOrderFromCart(Principal principal, @RequestParam String address) {
         User user = userService.findByUsername(principal.getName()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         Order order = orderService.createFromUserCart(user, address);
         return new OrderDto(order);
@@ -49,5 +43,10 @@ public class OrderController {
     public OrderDto getOrderById(@PathVariable Long id) {
         Order order = orderService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
         return new OrderDto(order);
+    }
+
+    @PostMapping("/js")
+    public void getCartFromJS(@RequestBody CartDto cartDto) {
+        System.out.println(cartDto);
     }
 }
